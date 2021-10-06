@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :articles
   VALID_EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i # const
   validates :email, uniqueness: { case_sensitive: false }, 
                     presence: true, 
