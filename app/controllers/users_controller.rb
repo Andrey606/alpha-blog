@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
 
+  def index
+    @users = User.all
+  end
+
   def new
     @user = User.new
   end
@@ -21,7 +25,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       flash[:notice] = "User was updated succesfuly."
-      redirect_to articles_path
+      redirect_to @user
     else
       render 'edit'
     end
