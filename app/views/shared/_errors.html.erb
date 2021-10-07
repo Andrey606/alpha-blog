@@ -1,4 +1,4 @@
-<% if @article.errors.any? %>
+<% if obj.errors.any? %>
   <div class="row justify-content-center">
     <div class="col-10">
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -7,7 +7,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <ul>
-          <% @article.errors.full_messages.each do |msg| %>
+          <% obj.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
           <% end %>
         </ul>
