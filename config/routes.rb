@@ -8,4 +8,9 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   resources :categories, except: [:destroy]
+
+  namespace :api, :defaults => {:format => :json} do
+    resources :users
+  end
+
 end
