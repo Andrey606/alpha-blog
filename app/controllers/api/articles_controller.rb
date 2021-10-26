@@ -19,7 +19,7 @@ class Api::ArticlesController < ApiController
     if @article.save
       render json: { message: "Article was created succesfuly.", user: ArticleSerializer.new(@article) }
     else
-      render json: { message: "The folowing errors prevented the article from beeing saved", messages: @article.errors.full_messages }
+      render json: { message: "The following errors prevented the article from beeing saved", messages: @article.errors.full_messages }
     end
   end
 
@@ -27,7 +27,7 @@ class Api::ArticlesController < ApiController
     if @article.update(article_params)
       render json: { message: "Article was updated succesfuly.", user: ArticleSerializer.new(@article) }
     else
-      render json: { message: "The folowing errors prevented the article from beeing saved", messages: @article.errors.full_messages }
+      render json: { message: "The following errors prevented the article from beeing saved", messages: @article.errors.full_messages }
     end
   end
 

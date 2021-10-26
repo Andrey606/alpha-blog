@@ -7,7 +7,7 @@ class Api::CategoriesController < ApiController
     if @category.update(category_params)
       render json: { message: "Category was updated succesfuly.", user: CategorySerializer.new(@category) }
     else
-      render json: { message: "The folowing errors prevented the category from beeing saved", messages: @category.errors.full_messages }
+      render json: { message: "The following errors prevented the category from beeing saved", messages: @category.errors.full_messages }
     end
   end
 
@@ -16,7 +16,7 @@ class Api::CategoriesController < ApiController
     if category.save
       render json: { message: "Category was created succesfuly.", category: CategorySerializer.new(category) }
     else
-      render json: { message: "The folowing errors prevented the category from beeing saved", messages: category.errors.full_messages }
+      render json: { message: "The following errors prevented the category from beeing saved", messages: category.errors.full_messages }
     end
   end
 

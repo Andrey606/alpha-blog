@@ -20,7 +20,7 @@ class Api::UsersController < ApiController
       key = ApiKey.create(user_id: @user.id)
       render json: { message: "New user created succesfuly", user: SignedInUserSerializer.new(@user, key: key) }
     else
-      render json: { message: "The folowing errors prevented the user from beeing saved", messages: @user.errors.full_messages }, status: :unauthorized
+      render json: { message: "The following errors prevented the user from beeing saved", messages: @user.errors.full_messages }, status: :unauthorized
     end
   end
 
@@ -28,7 +28,7 @@ class Api::UsersController < ApiController
     if @user.update(user_params)
       render json: { message: "User was updated succesfuly.", user: UserSerializer.new(@user) }
     else
-      render json: { message: "The folowing errors prevented the user from beeing saved", messages: @user.errors.full_messages }
+      render json: { message: "The following errors prevented the user from beeing saved", messages: @user.errors.full_messages }
     end
   end
 
