@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_14_173217) do
+ActiveRecord::Schema.define(version: 2021_10_26_085550) do
+
+  create_table "api_keys", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "api_key"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "article_categories", force: :cascade do |t|
     t.integer "category_id"

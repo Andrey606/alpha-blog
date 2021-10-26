@@ -1,36 +1,40 @@
 class Api::UsersController < ApiController
 
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :requere_user, only: [:edit, :update]
-  before_action :requere_same_user, only: [:edit, :update, :destroy]
+  before_action :authenticate, only: [:update, :destroy]
+  before_action :requere_same_user, only: [:update, :destroy]
 
   def index
     # нужно указать ключ :page в запросе чтобы получить нужную страницу с юзерами
-    users = User.paginate(page: params[:page], per_page: 5)
+    users = User.paginate(page: params[:page], per_page: 50)
     # добавляем переменную в ответ с количеством страниц TOTAL-PAGES
     response.headers['TOTAL-PAGES'] = users.total_pages
-    render json: { users: users }
-  end
-
-  def new
-    # TODO:
+    # { users: users }
+    render json: { users: users.map {|user| SimpleUserSerializer.new(user)}  }
   end
 
   def create
-    # TODO:
-  end
-
-  def edit
-    # TODO:
+    @user = User.new(user_params)
+    if @user.save
+      key = ApiKey.create(user_id: @user.id)
+      render json: { message: "New user created succesfuly", user: SignedInUserSerializer.new(@user, key: key) }
+    else
+      render json: { message: "The folowing errors prevented the user from beeing saved", messages: @user.errors.full_messages }, status: :unauthorized
+    end
   end
 
   def update
-    # TODO:
+    if @user.update(user_params)
+      render json: { message: "User was updated succesfuly.", user: UserSerializer.new(@user) }
+    else
+      render json: { message: "The folowing errors prevented the user from beeing saved", messages: @user.errors.full_messages }
+    end
   end
 
   def show
     if(@user)
-      @user.articles
+      # render json: { user: @user, articles: @user.articles }
       render json: @user
     else
       # 404 error
@@ -39,23 +43,26 @@ class Api::UsersController < ApiController
   end
 
   def destroy
-    # TODO:
+    @user.destroy
+    render json: { message: "Account and all associated articles successfuly deleted." }
   end
 
   private
+
+  def user_params
+    params.permit(:username, :email, :password)
+  end
 
   def set_user
     @user = User.find_by_id(params[:id])
   end
 
-  def user_params
-    params.require(:user).permit(:username, :email, :password)
-  end
-
   def requere_same_user
-    if current_user != @user && !current_user.admin?
-      flash[:alert] = "You can only edit or delete your own account"
-      redirect_to @user
+    p "requere_same_user"
+    if @current_user != @user && !@current_user.admin?
+      p "head :unauthorized"
+      render json: { message: "Bad credentials" }, status: :unauthorized
     end
   end
+
 end
