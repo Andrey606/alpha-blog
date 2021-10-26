@@ -13,4 +13,9 @@ class ActiveSupport::TestCase
   def sign_in_as(user)
     post login_path, params: { session: { email: user.email, password: "password" } }
   end
+
+  def api_log_in(user)
+    post api_login_path, params: { session: { email: user.email, password: "password" } }
+    return JSON.parse(response.body)["user"]["current_key"]
+  end
 end
