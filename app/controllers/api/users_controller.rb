@@ -11,7 +11,7 @@ class Api::UsersController < ApiController
     # добавляем переменную в ответ с количеством страниц TOTAL-PAGES
     response.headers['TOTAL-PAGES'] = users.total_pages
     # { users: users }
-    render json: { users: users.map {|user| SimpleUserSerializer.new(user)}  }
+    render json: { users: users.map {|user| SimpleUserSerializer.new(user)} }
   end
 
   def create
