@@ -58,9 +58,7 @@ class Api::UsersController < ApiController
   end
 
   def requere_same_user
-    p "requere_same_user"
     if @current_user != @user && !@current_user.admin?
-      p "head :unauthorized"
       render json: { message: "Bad credentials" }, status: :unauthorized
     end
   end
