@@ -1,3 +1,9 @@
+# Docker
+docker pull ruby:3.0.2
+docker build -t alpha-blog-app .
+docker run -p 3002:3000 alpha-blog-app
+
+
 # README
 
 This README would normally document whatever steps are necessary to get the
